@@ -1,4 +1,4 @@
-package io.github.ruben.persona.exceptions;
+package io.github.ruben.shared.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

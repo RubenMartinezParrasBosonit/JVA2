@@ -1,10 +1,9 @@
 package io.github.ruben.persona.infrastructure.controller;
 
 import io.github.ruben.persona.application.PersonaService;
-import io.github.ruben.persona.exceptions.IdNotFoundException;
-import io.github.ruben.persona.exceptions.UnprocesableException;
 import io.github.ruben.persona.infrastructure.controller.dto.input.PersonaInputDto;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaOutputDto;
+import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaRecordOutputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +18,7 @@ public class CreatePersonaController {
     PersonaService personaService;
 
     @PostMapping
-    public PersonaOutputDto aniadirPesona(@RequestBody PersonaInputDto personaInputDto) throws Exception {
+    public PersonaRecordOutputDto aniadirPesona(@RequestBody PersonaInputDto personaInputDto) throws Exception {
         return personaService.aniadirPersona(personaInputDto);
     }
 }

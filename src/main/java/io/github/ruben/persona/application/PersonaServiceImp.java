@@ -1,7 +1,8 @@
 package io.github.ruben.persona.application;
 
-import io.github.ruben.persona.exceptions.IdNotFoundException;
-import io.github.ruben.persona.exceptions.UnprocesableException;
+import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaRecordOutputDto;
+import io.github.ruben.shared.exceptions.IdNotFoundException;
+import io.github.ruben.shared.exceptions.UnprocesableException;
 import io.github.ruben.persona.infrastructure.controller.dto.input.PersonaInputDto;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaOutputDto;
 import io.github.ruben.persona.infrastructure.repository.jpa.PersonaRepositorio;
@@ -19,36 +20,42 @@ public class PersonaServiceImp implements PersonaService {
   @Autowired PersonaRepositorio personaRepositorio;
 
   @Override
-  public List<PersonaOutputDto> todasLasPersonas() {
+  public List<PersonaRecordOutputDto> todasLasPersonas() {
     List<Persona> personas = personaRepositorio.findAll();
-    List<PersonaOutputDto> personasOutputDto = new ArrayList<>();
+    List<PersonaRecordOutputDto> personasRecordOutputDto = new ArrayList<>();
     for (Persona persona : personas) {
-      personasOutputDto.add(new PersonaOutputDto(persona));
+      personasRecordOutputDto.add(new PersonaRecordOutputDto(persona.getId_persona(), persona.getUsuario(), persona.getPassword(),
+              persona.getName(), persona.getSurname(), persona.getCompany_email(), persona.getPersonal_email(), persona.getCity(),
+              persona.getActive(), persona.getCreated_date(), persona.getImagen_url(), persona.getTermination_date()));
     }
-    return personasOutputDto;
+    return personasRecordOutputDto;
   }
 
   @Override
-  public PersonaOutputDto filtrarPersonasPorId(int id) {
+  public PersonaRecordOutputDto filtrarPersonasPorId(int id) {
     Persona persona =
         personaRepositorio.findById(id).orElseThrow(() -> new IdNotFoundException("Persona con id: "+id+ " no encontrado"));
-    PersonaOutputDto personaOutputDto = new PersonaOutputDto(persona);
-    return personaOutputDto;
+    PersonaRecordOutputDto personaRecordOutputDto = new PersonaRecordOutputDto(persona.getId_persona(), persona.getUsuario(), persona.getPassword(),
+            persona.getName(), persona.getSurname(), persona.getCompany_email(), persona.getPersonal_email(), persona.getCity(),
+            persona.getActive(), persona.getCreated_date(), persona.getImagen_url(), persona.getTermination_date());
+    return personaRecordOutputDto;
   }
 
   @Override
-  public List<PersonaOutputDto> filtrarPersonaPorNombreUsuario(String usuario) {
+  public List<PersonaRecordOutputDto> filtrarPersonaPorNombreUsuario(String usuario) {
     List<Persona> personas = personaRepositorio.findByUsuario(usuario);
     if (personas.size() == 0) throw new NoSuchElementException("Usuario no encontrado");
-    List<PersonaOutputDto> personasOutputDto = new ArrayList<>();
+    List<PersonaRecordOutputDto> personasRecordOutputDto = new ArrayList<>();
     for (Persona persona : personas) {
-      personasOutputDto.add(new PersonaOutputDto(persona));
+      personasRecordOutputDto.add(new PersonaRecordOutputDto(persona.getId_persona(), persona.getUsuario(), persona.getPassword(),
+              persona.getName(), persona.getSurname(), persona.getCompany_email(), persona.getPersonal_email(), persona.getCity(),
+              persona.getActive(), persona.getCreated_date(), persona.getImagen_url(), persona.getTermination_date()));
     }
-    return personasOutputDto;
+    return personasRecordOutputDto;
   }
 
   @Override
-  public PersonaOutputDto aniadirPersona(PersonaInputDto personaInputDto) {
+  public PersonaRecordOutputDto aniadirPersona(PersonaInputDto personaInputDto) {
 
     if (personaInputDto.getUsuario() == null)
       throw new UnprocesableException("Usuario no puede ser nulo");
@@ -77,15 +84,15 @@ public class PersonaServiceImp implements PersonaService {
       throw new UnprocesableException("Created_date no puede ser nulo");
     }
 
-    PersonaOutputDto personaOutputDto = personaInputDtoToPersonaOutputDto(personaInputDto);
-    Persona persona = personaOutputDtoToEntity(personaOutputDto);
+    PersonaRecordOutputDto personaRecordOutputDto = personaInputDtoToPersonaRecordOutputDto(personaInputDto);
+    Persona persona = personaRecordOutputDtoToEntity(personaRecordOutputDto);
     personaRepositorio.saveAndFlush(persona);
 
-    return personaOutputDto;
+    return personaRecordOutputDto;
   }
 
   @Override
-  public PersonaOutputDto modificarPersona(Integer id, PersonaInputDto personaInputDto)
+  public PersonaRecordOutputDto modificarPersona(Integer id, PersonaInputDto personaInputDto)
       throws Exception {
     Persona persona =
         personaRepositorio
@@ -139,10 +146,12 @@ public class PersonaServiceImp implements PersonaService {
     if (personaInputDto.getTermination_date() != null) {
       personaOutputDto.setTermination_date(personaInputDto.getTermination_date());
     }
-
-    persona = personaOutputDtoToEntity(personaOutputDto);
+    PersonaRecordOutputDto personaRecordOutputDto = new PersonaRecordOutputDto(personaOutputDto.getId_persona(), personaOutputDto.getUsuario(), personaOutputDto.getPassword(),
+            personaOutputDto.getName(), personaOutputDto.getSurname(), personaOutputDto.getCompany_email(), personaOutputDto.getPersonal_email(), personaOutputDto.getCity(),
+            personaOutputDto.getActive(), personaOutputDto.getCreated_date(), personaOutputDto.getImagen_url(), personaOutputDto.getTermination_date());
+    persona = personaRecordOutputDtoToEntity(personaRecordOutputDto);
     personaRepositorio.saveAndFlush(persona);
-    return personaOutputDto;
+    return personaRecordOutputDto;
   }
 
   @Override
@@ -153,38 +162,29 @@ public class PersonaServiceImp implements PersonaService {
             .orElseThrow(() -> new IdNotFoundException("Persona con id: "+id+ " no encontrado")));
   }
 
-  private Persona personaOutputDtoToEntity(PersonaOutputDto personaOutputDto) {
+  private Persona personaRecordOutputDtoToEntity(PersonaRecordOutputDto personaRecordOutputDto) {
     Persona persona = new Persona();
-    persona.setId_persona(personaOutputDto.getId_persona());
-    persona.setUsuario(personaOutputDto.getUsuario());
-    persona.setPassword(personaOutputDto.getPassword());
-    persona.setName(personaOutputDto.getName());
-    persona.setSurname(personaOutputDto.getSurname());
-    persona.setCompany_email(personaOutputDto.getCompany_email());
-    persona.setPersonal_email(personaOutputDto.getPersonal_email());
-    persona.setCity(personaOutputDto.getCity());
-    persona.setActive(personaOutputDto.getActive());
-    persona.setCreated_date(personaOutputDto.getCreated_date());
-    persona.setImagen_url(personaOutputDto.getImagen_url());
-    persona.setTermination_date(personaOutputDto.getTermination_date());
+    persona.setId_persona(personaRecordOutputDto.id_persona());
+    persona.setUsuario(personaRecordOutputDto.usuario());
+    persona.setPassword(personaRecordOutputDto.password());
+    persona.setName(personaRecordOutputDto.name());
+    persona.setSurname(personaRecordOutputDto.surname());
+    persona.setCompany_email(personaRecordOutputDto.company_email());
+    persona.setPersonal_email(personaRecordOutputDto.personal_email());
+    persona.setCity(personaRecordOutputDto.city());
+    persona.setActive(personaRecordOutputDto.active());
+    persona.setCreated_date(personaRecordOutputDto.created_date());
+    persona.setImagen_url(personaRecordOutputDto.imagen_url());
+    persona.setTermination_date(personaRecordOutputDto.termination_date());
 
     return persona;
   }
 
-  private PersonaOutputDto personaInputDtoToPersonaOutputDto(PersonaInputDto personaInputDto) {
-    PersonaOutputDto personaOutputDto = new PersonaOutputDto();
-    personaOutputDto.setUsuario(personaInputDto.getUsuario());
-    personaOutputDto.setPassword(personaInputDto.getPassword());
-    personaOutputDto.setName(personaInputDto.getName());
-    personaOutputDto.setSurname(personaInputDto.getSurname());
-    personaOutputDto.setCompany_email(personaInputDto.getCompany_email());
-    personaOutputDto.setPersonal_email(personaInputDto.getPersonal_email());
-    personaOutputDto.setCity(personaInputDto.getCity());
-    personaOutputDto.setActive(personaInputDto.getActive());
-    personaOutputDto.setCreated_date(personaInputDto.getCreated_date());
-    personaOutputDto.setImagen_url(personaInputDto.getImagen_url());
-    personaOutputDto.setTermination_date(personaInputDto.getTermination_date());
+  private PersonaRecordOutputDto personaInputDtoToPersonaRecordOutputDto(PersonaInputDto personaInputDto) {
+    PersonaRecordOutputDto personaRecordOutputDto = new PersonaRecordOutputDto(null, personaInputDto.getUsuario(), personaInputDto.getPassword(),
+            personaInputDto.getName(), personaInputDto.getSurname(), personaInputDto.getCompany_email(), personaInputDto.getPersonal_email(), personaInputDto.getCity(),
+            personaInputDto.getActive(), personaInputDto.getCreated_date(), personaInputDto.getImagen_url(), personaInputDto.getTermination_date());
 
-    return personaOutputDto;
+    return personaRecordOutputDto;
   }
 }
