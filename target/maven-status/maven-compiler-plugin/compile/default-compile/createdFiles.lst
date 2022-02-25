@@ -1,0 +1,11 @@
+io\github\ruben\persona\infrastructure\controller\dto\input\PersonaInputDto.class
+io\github\ruben\persona\application\PersonaServiceImp.class
+io\github\ruben\persona\domain\Persona.class
+io\github\ruben\persona\infrastructure\controller\dto\output\PersonaOutputDto.class
+io\github\ruben\persona\infrastructure\controller\ReadPersonaController.class
+io\github\ruben\persona\infrastructure\controller\UpdatePersonaController.class
+io\github\ruben\persona\application\PersonaService.class
+io\github\ruben\persona\infrastructure\controller\CreatePersonaController.class
+io\github\ruben\persona\infrastructure\controller\DeletePersonaController.class
+io\github\ruben\Db1Application.class
+io\github\ruben\persona\infrastructure\repository\jpa\PersonaRepositorio.class

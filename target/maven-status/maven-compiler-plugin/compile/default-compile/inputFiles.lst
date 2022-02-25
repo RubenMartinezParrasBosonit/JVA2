@@ -1,0 +1,11 @@
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\application\PersonaService.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\UpdatePersonaController.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\ReadPersonaController.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\CreatePersonaController.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\dto\input\PersonaInputDto.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\application\PersonaServiceImp.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\repository\jpa\PersonaRepositorio.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\Db1Application.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\domain\Persona.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\DeletePersonaController.java
+C:\Users\ruben.mparras\IdeaProjects\DB1\src\main\java\io\github\ruben\persona\infrastructure\controller\dto\output\PersonaOutputDto.java
