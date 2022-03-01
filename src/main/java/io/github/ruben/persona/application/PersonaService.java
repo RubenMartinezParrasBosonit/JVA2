@@ -4,6 +4,7 @@ import io.github.ruben.persona.infrastructure.controller.dto.input.PersonaInputD
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaOutputDto;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaRecordOutputDto;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PersonaService {
@@ -13,4 +14,5 @@ public interface PersonaService {
     public PersonaRecordOutputDto aniadirPersona(PersonaInputDto personaInputDto) throws Exception;
     public PersonaRecordOutputDto modificarPersona(Integer id, PersonaInputDto personaInputDto) throws Exception;
     public void borrarPersona(Integer id);
+    public List <PersonaOutputDto> getData(String usuario, String name, String surname, Date created_date, String dateCondition, String order, Integer pagina);
 }

@@ -4,11 +4,11 @@ import io.github.ruben.persona.application.PersonaService;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaOutputDto;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaRecordOutputDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("persona")
@@ -17,6 +17,11 @@ public class ReadPersonaController {
 
     @Autowired
     PersonaService personaService;
+
+    @Autowired
+    EntityManager em;
+
+
 
     @GetMapping
     public List<PersonaRecordOutputDto> findAll(){
@@ -32,4 +37,16 @@ public class ReadPersonaController {
     public List<PersonaRecordOutputDto> getPersonaByUsuario(@PathVariable String usuario){
         return personaService.filtrarPersonaPorNombreUsuario(usuario);
     }
+
+    @GetMapping("/get")
+    public List<PersonaOutputDto> getData(@RequestParam(required=false, name="usuario") String usuario,
+                                          @RequestParam(required=false, name="name") String name,
+                                          @RequestParam(required=false, name="surname") String surname,
+                                          @RequestParam(required=false, name="created_date") @DateTimeFormat(pattern="dd-MM-yyyy") Date created_date,
+                                          @RequestParam(required=false, name="dateCondition") String dateCondition,
+                                          @RequestParam(required=false, name="order") String order,
+                                          @RequestParam(required=false, name="pagina") Integer pagina) {
+        return personaService.getData(usuario, name, surname, created_date, dateCondition, order, pagina);
+    }
+
 }

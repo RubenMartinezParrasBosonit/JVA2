@@ -10,14 +10,19 @@ import io.github.ruben.persona.domain.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Service
 public class PersonaServiceImp implements PersonaService {
 
   @Autowired PersonaRepositorio personaRepositorio;
+
+  public static final String GREATER_THAN="greater";
+  public static final String LESS_THAN="less";
+  public static final String EQUAL="equal";
+
+  public static final String USUARIO="usuario";
+  public static final String NAME="name";
 
   @Override
   public List<PersonaRecordOutputDto> todasLasPersonas() {
@@ -160,6 +165,41 @@ public class PersonaServiceImp implements PersonaService {
         personaRepositorio
             .findById(id)
             .orElseThrow(() -> new IdNotFoundException("Persona con id: "+id+ " no encontrado")));
+  }
+
+  @Override
+  public List <PersonaOutputDto> getData(String usuario, String name, String surname, Date created_date, String dateCondition, String order, Integer pagina){
+    HashMap<String, Object> data=new HashMap<>();
+
+    if (usuario!=null)
+      data.put("usuario",usuario);
+    if (name!=null)
+      data.put("name",name);
+    if (surname!=null)
+      data.put("surname",surname);
+    if (dateCondition==null)
+      dateCondition=GREATER_THAN;
+    if (!dateCondition.equals(GREATER_THAN) && 	!dateCondition.equals(LESS_THAN) && !dateCondition.equals(EQUAL))
+      dateCondition=GREATER_THAN;
+    if (created_date!=null)
+    {
+      data.put("created_date",created_date);
+      data.put("dateCondition",dateCondition);
+    }
+    if (order!=null)
+      data.put("order",order);
+    if (pagina!=null)
+      data.put("pagina", pagina);
+
+
+    List <Persona> personas = personaRepositorio.getData(data);
+    List <PersonaOutputDto> personasOutputDto = new ArrayList<>();
+
+    for(Persona persona : personas){
+      personasOutputDto.add(new PersonaOutputDto(persona));
+    }
+
+    return personasOutputDto;
   }
 
   private Persona personaRecordOutputDtoToEntity(PersonaRecordOutputDto personaRecordOutputDto) {
