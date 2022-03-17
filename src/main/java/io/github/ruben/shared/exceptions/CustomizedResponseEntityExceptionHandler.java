@@ -23,4 +23,16 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         CustomError exceptionResponse = new CustomError(new Date(), HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
         return new ResponseEntity<CustomError>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
     }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public final ResponseEntity<CustomError> handleStorageFileNotFoundException(StorageFileNotFoundException ex, WebRequest request) {
+        CustomError exceptionResponse = new CustomError(new Date(), HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<CustomError>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(StorageException.class)
+    public final ResponseEntity<CustomError> handleStorageException(StorageException ex, WebRequest request) {
+        CustomError exceptionResponse = new CustomError(new Date(), HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage());
+        return new ResponseEntity<CustomError>(exceptionResponse, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }
