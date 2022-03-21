@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import io.github.ruben.persona.infrastructure.controller.dto.input.PersonaInputDto;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaRecordOutputDto;
+import io.github.ruben.persona.infrastructure.repository.jpa.PersonaRepositorio;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,9 @@ class CreatePersonaControllerTest {
 	@Autowired
 	MockMvc mockMvc;
 
+	@Autowired
+	PersonaRepositorio personaRepositorio;
+
 
 	PersonaInputDto personaInputDto = new PersonaInputDto();
 
@@ -34,6 +38,10 @@ class CreatePersonaControllerTest {
 	@BeforeAll
 	public void start(){
 		createPersonaInput(personaInputDto);
+	}
+	@AfterAll
+	public void finish(){
+		personaRepositorio.deleteAll();
 	}
 
 	@Test

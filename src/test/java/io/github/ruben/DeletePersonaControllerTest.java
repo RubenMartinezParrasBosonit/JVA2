@@ -33,6 +33,11 @@ class DeletePersonaControllerTest {
 		createPersona(persona);
 	}
 
+	@AfterAll
+	public void finish(){
+		personaRepositorio.deleteAll();
+	}
+
 	@Test
 	@DisplayName("Testing delete person by Id")
 	void testDeletePersona() throws Exception{

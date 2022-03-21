@@ -62,24 +62,24 @@ public class PersonaServiceImp implements PersonaService {
   @Override
   public PersonaRecordOutputDto aniadirPersona(PersonaInputDto personaInputDto) {
 
-    if (personaInputDto.getUsuario() == "")
+    if (personaInputDto.getUsuario().equals(""))
       throw new UnprocesableException("Usuario no puede ser nulo");
     if (personaInputDto.getUsuario().length() < 6 || personaInputDto.getUsuario().length() > 10) {
       throw new UnprocesableException("La longitud del nombre de usuario no está entre 6 y 10");
     }
-    if (personaInputDto.getPassword() == "") {
+    if (personaInputDto.getPassword().equals("")) {
       throw new UnprocesableException("Password no puede ser nulo");
     }
-    if (personaInputDto.getName() == "") {
+    if (personaInputDto.getName().equals("")) {
       throw new UnprocesableException("Name no puede ser nulo");
     }
-    if (personaInputDto.getCompany_email() == "") {
+    if (personaInputDto.getCompany_email().equals("")) {
       throw new UnprocesableException("Company_email no puede ser nulo");
     }
-    if (personaInputDto.getPersonal_email() == "") {
+    if (personaInputDto.getPersonal_email().equals("")) {
       throw new UnprocesableException("Personal_email no puede ser nulo");
     }
-    if (personaInputDto.getCity() == "") {
+    if (personaInputDto.getCity().equals("")) {
       throw new UnprocesableException("City no puede ser nulo");
     }
     if (personaInputDto.getActive() == null) {
@@ -112,27 +112,27 @@ public class PersonaServiceImp implements PersonaService {
       personaOutputDto.setUsuario(personaInputDto.getUsuario());
     }
 
-    if (personaInputDto.getPassword() != "") {
+    if (!personaInputDto.getPassword().equals("")) {
       personaOutputDto.setPassword(personaInputDto.getPassword());
     }
 
-    if (personaInputDto.getName() != "") {
+    if (!personaInputDto.getName().equals("")) {
       personaOutputDto.setName(personaInputDto.getName());
     }
 
-    if (personaInputDto.getSurname() != "") {
+    if (!personaInputDto.getSurname().equals("")) {
       personaOutputDto.setSurname(personaInputDto.getSurname());
     }
 
-    if (personaInputDto.getCompany_email() != "") {
+    if (!personaInputDto.getCompany_email().equals("")) {
       personaOutputDto.setCompany_email(personaInputDto.getCompany_email());
     }
 
-    if (personaInputDto.getPersonal_email() != "") {
+    if (!personaInputDto.getPersonal_email().equals("")) {
       personaOutputDto.setPersonal_email(personaInputDto.getPersonal_email());
     }
 
-    if (personaInputDto.getCity() != "") {
+    if (!personaInputDto.getCity().equals("")) {
       personaOutputDto.setCity(personaInputDto.getCity());
     }
 
@@ -144,7 +144,7 @@ public class PersonaServiceImp implements PersonaService {
       personaOutputDto.setCreated_date(personaInputDto.getCreated_date());
     }
 
-    if (personaInputDto.getImagen_url() != "") {
+    if (!personaInputDto.getImagen_url().equals("")) {
       personaOutputDto.setImagen_url(personaInputDto.getImagen_url());
     }
 

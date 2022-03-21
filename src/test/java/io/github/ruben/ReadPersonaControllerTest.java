@@ -41,6 +41,11 @@ class ReadPersonaControllerTest {
 		createPersona(persona2);
 	}
 
+	@AfterAll
+	public void finish(){
+		personaRepositorio.deleteAll();
+	}
+
 	@Test
 	@DisplayName("Testing get person by Id")
 	void testGetPersonById() throws Exception{
@@ -66,8 +71,14 @@ class ReadPersonaControllerTest {
 		List<PersonaOutputDto> personaOutputDto = new ObjectMapper()
 				.readValue(contenido, new TypeReference<List<PersonaOutputDto>>() {
 		});
-		assertionsPersona(persona, personaOutputDto.get(0));
-		assertionsPersona(persona2, personaOutputDto.get(1));
+		if(persona.getId_persona() == personaOutputDto.get(0).getId_persona()){
+			assertionsPersona(persona, personaOutputDto.get(0));
+			assertionsPersona(persona2, personaOutputDto.get(1));
+		}else{
+			assertionsPersona(persona2, personaOutputDto.get(0));
+			assertionsPersona(persona, personaOutputDto.get(1));
+		}
+
 	}
 
 	private void assertionsPersona(Persona persona, PersonaOutputDto personaOutputDto){

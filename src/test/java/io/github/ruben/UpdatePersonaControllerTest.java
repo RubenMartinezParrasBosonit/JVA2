@@ -42,6 +42,11 @@ class UpdatePersonaControllerTest {
 		createPersonaAndPersonaInputDto(persona, personaInputDto);
 	}
 
+	@AfterAll
+	public void finish(){
+		personaRepositorio.deleteAll();
+	}
+
 	@Test
 	@DisplayName("Testing update person by Id")
 	void testUpdatePersona() throws Exception{
