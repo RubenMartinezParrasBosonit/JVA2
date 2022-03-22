@@ -2,6 +2,7 @@ package io.github.ruben;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.ruben.persona.application.PersonaService;
 import io.github.ruben.persona.domain.Persona;
 import io.github.ruben.persona.infrastructure.controller.dto.output.PersonaOutputDto;
 import io.github.ruben.persona.infrastructure.repository.jpa.PersonaRepositorio;
@@ -29,6 +30,9 @@ class ReadPersonaControllerTest {
 
 	@Autowired
 	PersonaRepositorio personaRepositorio;
+
+	@Autowired
+	PersonaService personaService;
 
 	Persona persona = new Persona();
 	Persona persona2 = new Persona();
